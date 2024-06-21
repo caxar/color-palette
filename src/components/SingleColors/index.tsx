@@ -41,6 +41,7 @@ const SingleColors = () => {
     (color: { hex: string }) => color?.hex === colorSelect
   );
 
+  // Получаем данные из store
   const { infoColors } = useSelector(selectProducts);
 
   const schemeDataPalette = infoColors?.colorSchemeData;
@@ -234,10 +235,16 @@ const SingleColors = () => {
                 Содержит многоцветные комбинации, подобранные в соответствии с
                 соотношением цветов в цветовом круге.
               </span>
+              {/* {status === "failed"
+            ? "Not found 404"
+            : status === "pending"
+            ? [...new Array(8)].map(() => <SkeletonProduct key={nanoid()} />)
+            : productItem} */}
               <ColorPalette data={schemeDataPalette} />
             </div>
           </div>
-          <ContrastChecker />
+          {}
+          <ContrastChecker data={infoColors?.hex?.value} />
         </div>
       </div>
       <ToastContainer className="modify-toastContainer" />

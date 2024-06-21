@@ -4,9 +4,14 @@ import React from "react";
 
 import "./ColorPalette.scss";
 import { Bounce, toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { selectProducts } from "../../redux/products/selectors";
 
 const ColorPalette = ({ data }) => {
   const [activeColor, setActiveColor] = React.useState(null);
+
+  // Получаем данные из store
+  const { status } = useSelector(selectProducts);
 
   const colorTest = (color: string) => {
     return colord(color).isDark();
@@ -34,6 +39,11 @@ const ColorPalette = ({ data }) => {
   return (
     <div className="palette-wrapper">
       <div className="palette-wrapper__tiles">
+        {/* {status === "failed"
+            ? "Not found 404"
+            : status === "pending"
+            ? [...new Array(8)].map(() => <SkeletonProduct key={nanoid()} />)
+            : productItem} */}
         {data?.map((item) => (
           <div
             key={nanoid()}
