@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Status } from "./types";
+import { ProductSliceState, Status } from "./types";
 import { fetchProductsAction } from "./asyncActions";
 
 const initialState = {
   entities: [],
   infoColors: [],
   status: Status.Pending, // pending | succeeded | failed
-};
+} as ProductSliceState;
 
 export const productsSlice = createSlice({
   name: "products",

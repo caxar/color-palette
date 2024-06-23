@@ -5,7 +5,11 @@ import a11yPlugin from "colord/plugins/a11y";
 import harmoniesPlugin from "colord/plugins/harmonies";
 extend([a11yPlugin, harmoniesPlugin]);
 
-const ContrastChecker = ({ data }) => {
+interface propsContrastChecker {
+  data: string;
+}
+
+const ContrastChecker = ({ data }: propsContrastChecker) => {
   // Проверка контраста на белом или черном фоне
   const contrastChekerBlack = colord(data).contrast("#000");
   const contrastChekerWhite = colord(data).contrast("#fff");

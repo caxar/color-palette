@@ -1,21 +1,25 @@
+import React from "react";
 import { nanoid } from "@reduxjs/toolkit";
+import { Bounce, toast } from "react-toastify";
 import { colord, extend } from "colord";
 import harmoniesPlugin from "colord/plugins/harmonies";
-import React from "react";
 
 extend([harmoniesPlugin]);
 
 import "./ColorPalette.scss";
-import { Bounce, toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import { selectProducts } from "../../redux/products/selectors";
 
-const ColorPalette = ({ data, currentColor }) => {
-  const [activeColor, setActiveColor] = React.useState(null);
+interface PropsColorPalette {
+  data: [
+    {
+      hex: {
+        value: string;
+      };
+    }
+  ];
+  currentColor: string;
+}
 
-  // Получаем данные из store
-  const { status } = useSelector(selectProducts);
-
+const ColorPalette = ({ data, currentColor }: PropsColorPalette) => {
   const colorTest = (color: string) => {
     return colord(color).isDark();
   };

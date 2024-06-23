@@ -1,7 +1,7 @@
 import React from "react";
 import "./singleColors.scss";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchProductsAction } from "../../redux/products/asyncActions";
@@ -15,9 +15,13 @@ import { selectProducts } from "../../redux/products/selectors";
 import { HexColorPicker } from "react-colorful";
 import ColorPalette from "../ColorPalette";
 import ContrastChecker from "../ContrastChecker";
+import { ColorProps } from "../../redux/products/types";
+import SkeletonColors from "./SkeletonSingleColors";
+import SkeletonSingleColors from "./SkeletonSingleColors";
+import { nanoid } from "@reduxjs/toolkit";
 
 const SingleColors = () => {
-  const [colorSelect, setColorSelect] = React.useState<string>(null);
+  const [colorSelect, setColorSelect] = React.useState<string>("");
   const [visiblePalette, setVisiblePalette] = React.useState<boolean>(false);
   const paletteRef = React.useRef(null);
 
@@ -29,7 +33,7 @@ const SingleColors = () => {
 
   React.useEffect(() => {
     dispatch(fetchProductsAction(id));
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     setColorSelect("#" + id);
   }, [dispatch, id, colorSelect]);
 
@@ -42,7 +46,7 @@ const SingleColors = () => {
   );
 
   // Получаем данные из store
-  const { infoColors } = useSelector(selectProducts);
+  const { infoColors, status } = useSelector(selectProducts);
 
   const schemeDataPalette = infoColors?.colorSchemeData;
 
@@ -74,12 +78,13 @@ const SingleColors = () => {
   // Обработка клика вне элеменат и закрытие палетки выбора цвета
   React.useEffect(() => {
     document.addEventListener("mousedown", (e) => {
-      if (!paletteRef.current.contains(e.target)) {
+      if (!paletteRef?.current?.contains(e.target)) {
         setVisiblePalette(false);
       }
     });
   }, [paletteRef]);
 
+  // изменения url при смене цвета
   const handleChangeColor = (colorItem: string) => {
     setColorSelect(colorItem);
     history(`/color/${colorItem.slice(1)}`, { replace: true });
@@ -110,7 +115,6 @@ const SingleColors = () => {
           <div className="single-color__top">
             <div className="single-color__title">Информация о цвете</div>
             <div className="single-color__selected">
-              {/* <div className="selected-title">Выбор цвета</div> */}
               <div className="selected-color">
                 <div className="selected-color__title">Выбрать цвет</div>
                 <div
@@ -161,69 +165,125 @@ const SingleColors = () => {
               <ul className="conversions-menu">
                 <li>
                   <span className="conversions-menu__title">Hex</span>
-                  <span
+                  {status === "failed" ? (
+                    "Ошибка выполнения"
+                  ) : status === "pending" ? (
+                    [...new Array(1)].map(() => (
+                      <SkeletonSingleColors key={nanoid()} />
+                    ))
+                  ) : (
+                    <span
+                      onClick={() => {
+                        copyText(infoColors?.hex?.value);
+                      }}
+                      className="conversions-menu__btn"
+                    >
+                      {infoColors?.hex?.value}
+                    </span>
+                  )}
+                  {/* <span
                     onClick={() => {
                       copyText(infoColors?.hex?.value);
                     }}
                     className="conversions-menu__btn"
                   >
                     {infoColors?.hex?.value}
-                  </span>
+                  </span> */}
                 </li>
                 <li>
                   <span className="conversions-menu__title">RGB</span>
-                  <span
-                    onClick={() => {
-                      copyText(infoColors?.rgb?.value);
-                    }}
-                    className="conversions-menu__btn"
-                  >
-                    {infoColors?.rgb?.value}
-                  </span>
+                  {status === "failed" ? (
+                    "Ошибка выполнения"
+                  ) : status === "pending" ? (
+                    [...new Array(1)].map(() => (
+                      <SkeletonSingleColors key={nanoid()} />
+                    ))
+                  ) : (
+                    <span
+                      onClick={() => {
+                        copyText(infoColors?.rgb?.value);
+                      }}
+                      className="conversions-menu__btn"
+                    >
+                      {infoColors?.rgb?.value}
+                    </span>
+                  )}
                 </li>
                 <li>
                   <span className="conversions-menu__title">HSL</span>
-                  <span
-                    onClick={() => {
-                      copyText(infoColors?.hsl?.value);
-                    }}
-                    className="conversions-menu__btn"
-                  >
-                    {infoColors?.hsl?.value}
-                  </span>
+                  {status === "failed" ? (
+                    "Ошибка выполнения"
+                  ) : status === "pending" ? (
+                    [...new Array(1)].map(() => (
+                      <SkeletonSingleColors key={nanoid()} />
+                    ))
+                  ) : (
+                    <span
+                      onClick={() => {
+                        copyText(infoColors?.hsl?.value);
+                      }}
+                      className="conversions-menu__btn"
+                    >
+                      {infoColors?.hsl?.value}
+                    </span>
+                  )}
                 </li>
                 <li>
                   <span className="conversions-menu__title">HSV</span>
-                  <span
-                    onClick={() => {
-                      copyText(infoColors?.hsv?.value);
-                    }}
-                    className="conversions-menu__btn"
-                  >
-                    {infoColors?.hsv?.value}
-                  </span>
+                  {status === "failed" ? (
+                    "Ошибка выполнения"
+                  ) : status === "pending" ? (
+                    [...new Array(1)].map(() => (
+                      <SkeletonSingleColors key={nanoid()} />
+                    ))
+                  ) : (
+                    <span
+                      onClick={() => {
+                        copyText(infoColors?.hsv?.value);
+                      }}
+                      className="conversions-menu__btn"
+                    >
+                      {infoColors?.hsv?.value}
+                    </span>
+                  )}
                 </li>
                 <li>
                   <span className="conversions-menu__title">CMYK</span>
-                  <span
-                    onClick={() => {
-                      copyText(infoColors?.cmyk?.value);
-                    }}
-                    className="conversions-menu__btn"
-                  >
-                    {infoColors?.cmyk?.value}
-                  </span>
+                  {status === "failed" ? (
+                    "Ошибка выполнения"
+                  ) : status === "pending" ? (
+                    [...new Array(1)].map(() => (
+                      <SkeletonSingleColors key={nanoid()} />
+                    ))
+                  ) : (
+                    <span
+                      onClick={() => {
+                        copyText(infoColors?.cmyk?.value);
+                      }}
+                      className="conversions-menu__btn"
+                    >
+                      {infoColors?.cmyk?.value}
+                    </span>
+                  )}
                 </li>
                 <li>
                   <span className="conversions-menu__title">XYZ</span>
-                  <span
-                    onClick={() => {
-                      copyText(infoColors?.xyz?.value);
-                    }}
-                    className="conversions-menu__btn"
-                  >
-                    {infoColors?.xyz?.value}
-                  </span>
+                  {status === "failed" ? (
+                    "Ошибка выполнения"
+                  ) : status === "pending" ? (
+                    [...new Array(1)].map(() => (
+                      <SkeletonSingleColors key={nanoid()} />
+                    ))
+                  ) : (
+                    <span
+                      onClick={() => {
+                        copyText(infoColors?.xyz?.value);
+                      }}
+                      className="conversions-menu__btn"
+                    >
+                      {infoColors?.xyz?.value}
+                    </span>
+                  )}
                 </li>
               </ul>
             </div>
