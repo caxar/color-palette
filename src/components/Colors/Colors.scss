@@ -1,7 +1,26 @@
+@import "../../css-config/mixins.scss";
+
 .colors-wrapper {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 20px;
   row-gap: 40px;
+}
+
+@include xl {
+  .colors-wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@include lg {
+  .colors-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@include sm {
+  .colors-wrapper {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }

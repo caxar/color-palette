@@ -1,3 +1,5 @@
+@import "../../css-config/mixins.scss";
+
 .palette-wrapper {
   padding-top: 50px;
   display: flex;
@@ -5,7 +7,7 @@
   gap: 50px;
   &__block {
     .text {
-      text-align-last: left;
+      text-align: left;
       margin-bottom: 25px;
       .title {
         font-size: 30px;
@@ -77,6 +79,10 @@
       }
     }
   }
-  &__info {
+}
+
+@include sm {
+  .palette-wrapper__block .text {
+    text-align: center;
   }
 }
