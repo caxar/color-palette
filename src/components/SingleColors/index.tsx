@@ -240,7 +240,10 @@ const SingleColors = () => {
             : status === "pending"
             ? [...new Array(8)].map(() => <SkeletonProduct key={nanoid()} />)
             : productItem} */}
-              <ColorPalette data={schemeDataPalette} />
+              <ColorPalette
+                data={schemeDataPalette}
+                currentColor={infoColors?.hex?.value}
+              />
             </div>
           </div>
           {}

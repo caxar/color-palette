@@ -1,13 +1,29 @@
 .palette-wrapper {
-  max-width: 500px;
-  margin: 50px auto;
-  overflow: hidden;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  &__block {
+    .text {
+      text-align-last: left;
+      margin-bottom: 25px;
+      .title {
+        font-size: 30px;
+        font-family: "Archivo Black", sans-serif;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        color: #8a8a94;
+      }
+    }
+  }
   &__tiles {
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
     display: flex;
     flex-direction: row;
     .tiles-item {
@@ -25,6 +41,14 @@
       -moz-transition: flex-basis 0.15s ease-in-out;
       -ms-transition: flex-basis 0.15s ease-in-out;
       -o-transition: flex-basis 0.15s ease-in-out;
+      &:first-child {
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+      }
+      &:last-child {
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
       &:hover {
         flex-basis: 15%;
         span {
